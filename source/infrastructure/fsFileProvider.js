@@ -1,0 +1,3 @@
+var fsProvider = function(configuration) {
+
+};

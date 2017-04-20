@@ -1,0 +1,34 @@
+body {
+    font-family: 'Josefin-sans', sans-serif;
+    font-weight: 300;
+    color: #999;
+}
+
+header {
+    font-size: 120%;
+    color: #777;
+}
+
+header h1 {
+    color: orangered;
+    font-weight: 100;
+    font-size: 1em;
+}
+
+header h1 i {
+    font-size: 3em;
+}
+
+.input {
+    border: 1pt solid #aaaaaa;
+    height: 30px;
+}
+
+.textbox {
+    width: 300px;
+    font-size: 100%;
+}
+
+.identification {
+    font-size: 75%;
+}

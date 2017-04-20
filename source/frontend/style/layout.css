@@ -1,0 +1,92 @@
+html{
+    min-width: 100%;
+    min-height: 100%;
+    margin: 0;
+}
+
+body{
+    font-family: Lato,"Helvetica Neue",Arial,sans-serif;
+    min-width: 100%;
+    min-height: 100%;
+    margin: 0;
+}
+
+.wrapper{
+    min-height: 80%;
+    margin: auto;
+    padding: 20px;
+}
+
+header{
+    text-align: center;
+    display: block;
+    width: 100%;
+    margin: 20px;
+}
+
+header h1 {
+    margin: 0;
+}
+
+header img{
+    width: 200px;
+}
+
+.content {
+    width: 900px;
+    margin: auto;
+}
+
+.constrained {
+    margin: auto;
+    max-width: 900px;
+}
+
+.identification{
+    width: 100%;
+    text-align: right;
+}
+
+.hints {
+    font-size: 80%;
+    color: #777777;
+}
+
+.results-table {
+    border-collapse: collapse;
+    margin: auto;
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+
+.results-table td {
+    border: 1pt solid #aaaaaa;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.help {
+    text-align: center;
+    color: red;
+    margin: auto;
+    max-width: 500px;
+    padding: 10px;
+}
+
+.help li {
+    text-align: left;
+}
+
+.update{
+    margin-top: 20px;
+}
+
+.controls{
+    text-align: center;
+}
+
+.version{
+    color: #ddd;
+    font-size: 75%;
+    text-align: right;
+}

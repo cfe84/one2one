@@ -2,7 +2,7 @@
 
 window.onload = () => {
   get("/principal", (error, principal) => {
-    setFieldsByName("username", principal.name)
+    setElementsByName("username", principal.name)
   });
-  loadComponent("main", "content");
+  reporteesController.load();
 };

@@ -16,4 +16,9 @@ app.get("/principal", (req, res) => {
   res.end();
 });
 
+app.get("/reportees/", (req, res) => {
+  res.write('[{ "name": "jean", "id": 1}, { "name":"pierre", "id": 2}]');
+  res.end();
+});
+
 app.listen(PORT, () => console.log(`Listening on port ${PORT}`));

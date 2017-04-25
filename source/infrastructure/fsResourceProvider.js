@@ -1,43 +1,69 @@
 const ENTITY_PREFIX = "entity-";
+const ENTITY_EXTENSION = ".json";
 
-var fsResourceProvider = (fileProvider, serializer, basePath) => {
-  const calculateEntityFilename = (entityId) => `${basePath}${fileProvider.separator}${ENTITY_PREFIX}${entityId}`;
+var fsResourceProvider = (fileProvider, serializer) => {
+  const calculateEntityFilename = (entityId) => `${ENTITY_PREFIX}${entityId}${ENTITY_EXTENSION}`;
+
   const loadEntity = async (filePath) => {
-    const serializedEntity = await fileProvider.read(filePath);
+    let serializedEntity = undefined;
+    try {
+      serializedEntity = await fileProvider.read(filePath);
+    }
+    catch(error) {
+      throw error;
+    }
     const entity = serializer.deserialize(serializedEntity);
     return entity;
   };
-  const saveEntity = async (entity, path) => {
+
+  const validateEntity = (entity) => {
     if (!entity.id)
       throw Error("Entity id not set");
-    const serializedEntity = serializer.serialize(entity);
-    await fileProvider.write(path, serializedEntity);
   };
+
   return {
+
     list: async () => {
-      fileList = await fileProvider.list(basePath);
-      const isEntity = (fileName) => fileName.startsWith(ENTITY_PREFIX);
+      fileList = await fileProvider.list();
+      const isEntity = (fileName) => fileName.startsWith(ENTITY_PREFIX) && fileName.endsWith(ENTITY_EXTENSION);
       const entityFileList = fileList.filter(isEntity);
-      const entityFileNames = entityFileList.map(calculateEntityFilename);
-      const entities = entityFileNames.map(async (entityFileName) => await loadEntity(entityFileName));
-      return await entities;
+      res = [];
+      for (let index in entityFileList) {
+        try {
+          const entity = await loadEntity(entityFileList[index]);
+          res.push(entity);
+        }
+        catch(error) {
+          throw error;
+        }
+      }
+      return res;
     },
+
     load: async (id) => {
       const fileName = calculateEntityFilename(id);
-      return await loadEntity(userFileName);
+      return await loadEntity(fileName);
     },
-    create: async (user) =>
+
+    save: async (entity) =>
     {
-      const filename = calculateEntityFilename(user.id);
-      if (await fileProvider.exists(filename))
-        throw Error("Entity already exists");
-      await saveEntity(user, filename);
+      validateEntity(entity);
+      const filename = calculateEntityFilename(entity.id);
+      const serializedEntity = serializer.serialize(entity);
+      await fileProvider.write(filename, serializedEntity);
     },
-    update: async (user) => {
-      const filename = calculateEntityFilename(user.id);
-      if (! await fileProvider.exists(filename))
-        throwError("Entity does not exist");
-      await saveEntity(user, filename);
+
+    subResource: async (resourceName) =>
+    {
+      try {
+        const subDirectory = await fileProvider.subdir(resourceName);
+        const subResourceProvider = fsResourceProvider(subDirectory, serializer);
+        return subResourceProvider;
+      }
+      catch(error)
+      {
+        throw error;
+      }
     }
   };
 };
